@@ -2,16 +2,29 @@ import mongoose from "mongoose";
 
 const ContactSchema = new mongoose.Schema({
     firstname: {
-        type:String,
+        type: String,
         required: true,
+        trim: true,
     },
     lastname: {
-        type:String,
-        required:true,
+        type: String,
+        required: true,
+        trim: true,
+    },
+    contactNumber: {
+        type: String,
+        required: true,
+        trim: true,
     },
     email: {
-        type:String,
+        type: String,
         required: true,
+        trim: true,
+    },
+    message: {
+        type: String,
+        required: true,
+        trim: true,
     },
 });
 

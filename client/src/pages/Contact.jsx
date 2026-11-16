@@ -23,11 +23,48 @@ export default function Contacts() {
         });
     }
 
-    function handleSubmit(event) { 
-        event.preventDefault();
-        console.log("Contact Form Information:", formData);
+
+async function handleSubmit(event) {
+    event.preventDefault();
+
+    try {
+        const response = await fetch("http://localhost:3000/api/contacts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                firstname: formData.firstName,
+                lastname: formData.lastName,
+                contactNumber: formData.contactNumber,
+                email: formData.email,
+                message: formData.message,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Unable to submit contact form.");
+        }
+
+        alert("Your message was submitted successfully!");
+
+        setFormData({
+            firstName: "",
+            lastName: "",
+            contactNumber: "",
+            email: "",
+            message: "",
+        });
+
         navigate("/");
+    } catch (error) {
+        console.error("Contact submission error:", error);
+        alert(error.message);
     }
+}
+
 
     return (
 

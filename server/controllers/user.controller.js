@@ -72,10 +72,7 @@ export const updateUser = async (req, res) => {
         email,
         updated: new Date(),
       },
-      {
-        new: true,
-        runValidators: true,
-      }
+      {  returnDocument: "after", runValidators: true }
     );
 
     if (!user) {

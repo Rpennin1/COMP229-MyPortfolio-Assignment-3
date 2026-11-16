@@ -1,4 +1,3 @@
-
 import express from "express";
 import { signin, signout } from "../controllers/auth.controller.js";
 

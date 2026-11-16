@@ -8,3 +8,6 @@ client_backup/
 !.env.example
 *.log
 .DS_Store
+
+*.backup
+*-backup.*

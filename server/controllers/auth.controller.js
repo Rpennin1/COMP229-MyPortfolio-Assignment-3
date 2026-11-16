@@ -43,6 +43,7 @@ export const signin = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -77,4 +78,22 @@ export const hasAuthorization = (req, res, next) => {
   }
 
   next();
+};
+
+export const requireAdmin = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.auth._id);
+
+    if (!user || user.role !== "admin") {
+      return res.status(403).json({
+        message: "Admin access required.",
+      });
+    }
+
+    next();
+  } catch (error) {
+    return res.status(500).json({
+      message: "Unable to verify admin permissions.",
+    });
+  }
 };

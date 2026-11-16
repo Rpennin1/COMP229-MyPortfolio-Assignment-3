@@ -42,7 +42,7 @@ export const updateQualification = async (req, res) => {
     const qualification = await Education.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true, runValidators: true }
+      { returnDocument: "after", runValidators: true }
     );
 
     if (!qualification) {

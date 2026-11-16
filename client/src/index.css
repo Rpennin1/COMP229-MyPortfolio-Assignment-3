@@ -404,3 +404,60 @@ p {
 .contact-container button:hover {
   background-color: var(--dark-gray);
 }
+
+/* Education form */
+
+.education-section form {
+    max-width: 700px;
+    margin: 30px auto 50px;
+    padding: 30px;
+    background-color: var(--black);
+    color: var(--light);
+    border: 1px solid var(--light);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px var(--off-white);
+}
+
+.education-section form h2 {
+    margin-bottom: 25px;
+}
+
+.education-section form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.education-section form input,
+.education-section form textarea {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--light);
+    border-radius: 6px;
+    background-color: white;
+    color: #222;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.education-section form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.education-section form button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--light);
+    color: var(--black);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.education-section form button:hover {
+    opacity: 0.8;
+}
