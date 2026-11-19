@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import PageContainer from "../components/PageContainer";
 import { useAuth } from "../context/AuthContext";
+import API_URL from "../config/api";
 
 export default function Education() {
     const { user, token } = useAuth();
@@ -50,7 +51,7 @@ export default function Education() {
         async function fetchQualifications() {
             try {
                 const response = await fetch(
-                    "http://localhost:3000/api/qualifications"
+                    `${API_URL}/api/qualifications`
                 );
 
                 if (!response.ok) {
@@ -83,8 +84,8 @@ export default function Education() {
         try {
             const response = await fetch(
                 editingId
-                    ? `http://localhost:3000/api/qualifications/${editingId}`
-                    : "http://localhost:3000/api/qualifications",
+                    ? `${API_URL}/api/qualifications/${editingId}`
+                    : `${API_URL}/api/qualifications`,
                 {
                     method: editingId ? "PUT" : "POST",
                     headers: {
@@ -138,7 +139,7 @@ export default function Education() {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/api/qualifications/${id}`,
+                `${API_URL}/api/qualifications/${id}`,
                 {
                     method: "DELETE",
                     headers: {

@@ -1,12 +1,14 @@
+
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import PageContainer from "../components/PageContainer";
+import API_URL from "../config/api";
 
 export default function Contacts() {
     const navigate = useNavigate();
 
-    // info entered for contact form 
-    const [formData, setFormData ] = useState({
+    // info entered for contact form
+    const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
         contactNumber: "",
@@ -23,48 +25,46 @@ export default function Contacts() {
         });
     }
 
+    async function handleSubmit(event) {
+        event.preventDefault();
 
-async function handleSubmit(event) {
-    event.preventDefault();
+        try {
+            const response = await fetch(`${API_URL}/api/contacts`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    firstname: formData.firstName,
+                    lastname: formData.lastName,
+                    contactNumber: formData.contactNumber,
+                    email: formData.email,
+                    message: formData.message,
+                }),
+            });
 
-    try {
-        const response = await fetch("http://localhost:3000/api/contacts", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                firstname: formData.firstName,
-                lastname: formData.lastName,
-                contactNumber: formData.contactNumber,
-                email: formData.email,
-                message: formData.message,
-            }),
-        });
+            const data = await response.json();
 
-        const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || "Unable to submit contact form.");
+            }
 
-        if (!response.ok) {
-            throw new Error(data.message || "Unable to submit contact form.");
+            alert("Your message was submitted successfully!");
+
+            setFormData({
+                firstName: "",
+                lastName: "",
+                contactNumber: "",
+                email: "",
+                message: "",
+            });
+
+            navigate("/");
+        } catch (error) {
+            console.error("Contact submission error:", error);
+            alert(error.message);
         }
-
-        alert("Your message was submitted successfully!");
-
-        setFormData({
-            firstName: "",
-            lastName: "",
-            contactNumber: "",
-            email: "",
-            message: "",
-        });
-
-        navigate("/");
-    } catch (error) {
-        console.error("Contact submission error:", error);
-        alert(error.message);
     }
-}
-
 
     return (
 
@@ -73,92 +73,123 @@ async function handleSubmit(event) {
 
             <section className="contact-section">
 
-              <h1> Contact me </h1>
+                <h1> Contact me </h1>
 
-              <div className="contact-container"> 
+                <div className="contact-container">
 
-                <div className="contact-information">
+                    <div className="contact-information">
 
-                    <h2> Get in Touch </h2>
+                        <h2> Get in Touch </h2>
 
-                    <p>
-                        If you would like to contact me, you can use the information below or send me a message using the contact form. 
-                    </p>
+                        <p>
+                            If you would like to contact me, you can use the information below or send me a message using the contact form.
+                        </p>
 
-                    {/* my email */}
+                        {/* my email */}
 
-                    <div className="contact-detail">
-                        <strong>Email</strong>
-                        <p>rpennin3@my.centennialcollege.ca</p>
+                        <div className="contact-detail">
+                            <strong>Email</strong>
+                            <p>rpennin3@my.centennialcollege.ca</p>
+                        </div>
+
+                        {/* my phone */}
+
+                        <div className="contact-detail">
+                            <strong>Phone</strong>
+                            <p>123-456-7890</p>
+                        </div>
+
+                        {/* my location */}
+
+                        <div className="contact-detail">
+                            <strong>Location</strong>
+                            <p> Toronto, Ontario, Canada </p>
+                        </div>
+
                     </div>
 
-                    {/* my phone */}
+                    {/* my form for contacting me */}
 
-                    <div className="contact-detail">
-                        <strong>Phone</strong>
-                        <p>123-456-7890</p>
-                    </div>
+                    <form onSubmit={handleSubmit}>
 
-                    {/* my location */}
+                        <label htmlFor="firstName">
+                            First Name
+                        </label>
 
-                    <div className="contact-detail">
-                        <strong>Location</strong>
-                        <p> Toronto, Ontario, Canada </p>
-                    </div>
-                
+                        <input
+                            type="text"
+                            id="firstName"
+                            name="firstName"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <label htmlFor="lastName">
+                            Last Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lastName"
+                            name="lastName"
+                            value={formData.lastName}
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <label htmlFor="contactNumber">
+                            Contact Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="contactNumber"
+                            name="contactNumber"
+                            value={formData.contactNumber}
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <label htmlFor="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <label htmlFor="message">
+                            Message
+                        </label>
+
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="6"
+                            value={formData.message}
+                            onChange={handleChange}
+                            required
+                        ></textarea>
+
+                        <button type="submit">
+                            Send Message
+                        </button>
+
+                    </form>
+
+                    {/* end of my form */}
+
                 </div>
-
-                {/* my form for contacting me */}
-
-                <form onSubmit={handleSubmit}>
-
-                    <label htmlFor="firstName"> 
-                        First Name
-                    </label>
-
-                    <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} required />
-
-                    <label htmlFor="lastName">
-                        Last Name
-                    </label>
-
-                    <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} required />
-
-                    <label htmlFor="contactNumber"> 
-                        Contact Number 
-                    </label>
-
-                    <input type="tel" id="contactNumber" name="contactNumber" value={formData.contactNumber} onChange={handleChange} required />
-
-                    <label htmlFor="email">
-                        Email
-                    </label>
-
-                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required /> 
-
-                    <label htmlFor="message">
-                        Message
-                    </label>
-
-                    <textarea id="message" name="message" rows="6" value={formData.message} onChange={handleChange} required> </textarea>
-
-                    <button type="submit">
-                        Send Message
-                    </button> 
-
-                </form>
-
-                {/* end of my form */}
-
-            </div> 
-
-                    
-
 
             </section>
 
         </PageContainer>
-        
-    );
 
+    );
 }

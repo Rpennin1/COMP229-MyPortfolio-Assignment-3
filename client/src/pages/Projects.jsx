@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import PageContainer from "../components/PageContainer";
 import { useAuth } from "../context/AuthContext";
+import API_URL from "../config/api";
 
 export default function Projects() {
     const { user, token } = useAuth();
@@ -36,7 +37,7 @@ export default function Projects() {
         async function fetchProjects() {
             try {
                 const response = await fetch(
-                    "http://localhost:3000/api/projects"
+                    `${API_URL}/api/projects`
                 );
 
                 if (!response.ok) {
@@ -69,8 +70,8 @@ export default function Projects() {
         try {
             const response = await fetch(
                 editingId
-                    ? `http://localhost:3000/api/projects/${editingId}`
-                    : "http://localhost:3000/api/projects",
+                    ? `${API_URL}/api/projects/${editingId}`
+                    : `${API_URL}/api/projects`,
                 {
                     method: editingId ? "PUT" : "POST",
                     headers: {
@@ -150,7 +151,7 @@ export default function Projects() {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/api/projects/${id}`,
+                `${API_URL}/api/projects/${id}`,
                 {
                     method: "DELETE",
                     headers: {
