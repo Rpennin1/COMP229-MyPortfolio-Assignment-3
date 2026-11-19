@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageContainer from "../components/PageContainer";
 import { useAuth } from "../context/AuthContext";
+import API_URL from "../config/api";
 
 export default function AdminContacts() {
     const { user, token } = useAuth();
@@ -36,7 +37,7 @@ export default function AdminContacts() {
         async function fetchContacts() {
             try {
                 const response = await fetch(
-                    "http://localhost:3000/api/contacts",
+                    `${API_URL}/api/contacts`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -92,7 +93,7 @@ export default function AdminContacts() {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/api/contacts/${editingId}`,
+                `${API_URL}/api/contacts/${editingId}`,
                 {
                     method: "PUT",
                     headers: {
@@ -134,7 +135,7 @@ export default function AdminContacts() {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/api/contacts/${id}`,
+                `${API_URL}/api/contacts/${id}`,
                 {
                     method: "DELETE",
                     headers: {
