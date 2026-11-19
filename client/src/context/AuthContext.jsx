@@ -1,9 +1,8 @@
 
 import { createContext, useContext, useState } from "react";
+import API_URL from "../config/api";
 
 const AuthContext = createContext();
-
-const API_URL = "http://localhost:3000";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
@@ -85,7 +84,6 @@ export function AuthProvider({ children }) {
   );
 }
 
-// Access authentication information from other components.
 export function useAuth() {
   return useContext(AuthContext);
 }
